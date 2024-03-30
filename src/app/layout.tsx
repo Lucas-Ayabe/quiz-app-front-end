@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
 import { Rubik } from "next/font/google";
-import "./globals.css";
 import { twJoin } from "tailwind-merge";
 import { BgCircleBottom, BgCircleTop } from "@/components/icons";
+
+import "./globals.css";
 
 const rubik = Rubik({
   subsets: ["latin"],
   style: ["normal", "italic"],
-  weight: ["500", "400"],
+  weight: ["500", "400", "300"],
   variable: "--font-rubik",
 });
 

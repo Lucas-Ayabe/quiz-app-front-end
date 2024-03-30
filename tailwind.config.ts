@@ -9,8 +9,18 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      container: {
+        padding: {
+          DEFAULT: "1.5rem",
+          sm: "4rem",
+        },
+      },
       boxShadow: {
-        small: "0 16 40px rgba(143, 160, 193, 0.14)",
+        small: "0 16px 40px rgba(143, 160, 193, 0.14)",
+        "small-dark": "0 16px 40px rgba(49, 62, 81, 0.14)",
+      },
+      borderRadius: {
+        box: "1.75ch",
       },
       fontFamily: {
         sans: ["var(--font-rubik)"],
@@ -20,7 +30,8 @@ const config: Config = {
         "heading-l": "4rem",
         "heading-m": "2.25rem",
         "heading-s": "1.75rem",
-        "body-m": "0.75rem",
+        "body-m": "1.5rem",
+        "body-s": "1.25rem",
       },
       colors: {
         primary: {

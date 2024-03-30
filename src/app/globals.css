@@ -4,11 +4,15 @@
 
 @layer components {
   .button {
-    @apply inline-flex justify-center items-baseline gap-2 p-[1.15em] rounded-[1.75ch] shadow-small bg-primary text-white font-sans font-medium hover:bg-lightened hover:shadow-[#8FA0C124];
+    @apply inline-flex justify-center items-baseline gap-2 p-[1em] rounded-box shadow-small bg-primary text-white font-sans font-medium w-full text-[1.125rem] sm:text-heading-s hover:bg-lightened hover:shadow-[#8FA0C124];
   }
 }
 
 @layer utilities {
+  .flow > * + * {
+    margin-block-start: var(--flow, 1em);
+  }
+
   .text-balance {
     text-wrap: balance;
   }

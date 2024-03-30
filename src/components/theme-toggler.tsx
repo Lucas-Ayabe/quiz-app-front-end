@@ -1,9 +1,9 @@
 "use client";
 import React, { useEffect, useReducer } from "react";
-import { twJoin } from "tailwind-merge";
+import { twJoin, twMerge } from "tailwind-merge";
 import { Moon, Sun } from "./icons";
 
-export const ThemeToggler = () => {
+export const ThemeToggler = ({ className = "" }: { className?: string }) => {
   const [isDark, toggle] = useReducer((bool: boolean) => !bool, false);
 
   useEffect(() => {
@@ -11,7 +11,7 @@ export const ThemeToggler = () => {
   }, [isDark]);
 
   return (
-    <div className="flex items-baseline gap-4">
+    <div className={twMerge("flex items-baseline gap-4", className)}>
       <Sun className="fill-dark-1 dark:fill-white" />
       <label className="theme-toggler relative inline-flex cursor-pointer select-none items-center">
         <input
