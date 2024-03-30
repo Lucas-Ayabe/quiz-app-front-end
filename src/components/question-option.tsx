@@ -1,9 +1,14 @@
+"use client";
+
 import { PropsWithChildren } from "react";
 import { Check, Error as ErrorIcon } from "./icons";
 import { twMerge } from "tailwind-merge";
 
 const states = {
   idle: {
+    icon: <></>,
+  },
+  locked: {
     icon: <></>,
   },
   correct: {
@@ -17,15 +22,34 @@ const states = {
   },
 } as const;
 
-type OptionState = "idle" | "correct" | "incorrect" | "correct-selected";
+type OptionState =
+  | "idle"
+  | "correct"
+  | "incorrect"
+  | "correct-selected"
+  | "locked";
 
 type QuestionOptionProps = PropsWithChildren<{
   state?: OptionState;
+  name: string;
+  index: number;
+  value?: string;
+  selected?: boolean;
+  onChange?: (value: string) => void;
 }>;
+
+const indexToChar = (index: number) => {
+  return "ABCDEFGHIJKLMNOPQRSTUVWXYZ"[index] ?? "";
+};
 
 export function QuestionOption({
   children,
   state = "idle",
+  name,
+  index,
+  value = "",
+  selected = false,
+  onChange = () => null,
 }: QuestionOptionProps) {
   return (
     <label
@@ -37,9 +61,15 @@ export function QuestionOption({
       )}
     >
       <input
-        type="checkbox"
+        type="radio"
+        name={name}
         className="peer sr-only"
         disabled={state !== "idle"}
+        value={value}
+        checked={selected}
+        onChange={(event) =>
+          state === "idle" ? onChange(event.target.value) : null
+        }
       />
       <span
         className={twMerge(
@@ -51,7 +81,7 @@ export function QuestionOption({
           state === "incorrect" ? "!bg-danger !text-white" : ""
         )}
       >
-        A
+        {indexToChar(index)}
       </span>
       <span className="text-[1.125rem] sm:text-heading-s font-medium">
         {children}

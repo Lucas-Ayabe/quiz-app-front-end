@@ -1,16 +1,18 @@
 import { Logo } from "@/components";
-import { QuizGateway } from "@/data/quiz.gateway";
+import { QuizGateway } from "@/data";
+import { cookies } from "next/headers";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
 export default async function QuizResult({
   params,
 }: {
-  params: { quizId: string };
+  params: { quizTitle: string };
 }) {
-  const quiz = await QuizGateway.findByTitle(params.quizId);
+  const quiz = await QuizGateway.findByTitle(params.quizTitle);
+  const score = cookies().get("score")?.value;
 
-  if (!quiz) {
+  if (!quiz || !score) {
     redirect("/");
   }
 
@@ -26,10 +28,10 @@ export default async function QuizResult({
           <Logo src={quiz.icon}>{quiz.title}</Logo>
           <div className="flex flex-col gap-4 text-center">
             <span className="text-[88px] sm:text-display font-medium text-dark-3 leading-none dark:text-white">
-              8
+              {score}
             </span>
             <span className="text-body-m sm:text-body-m text-dark-1 dark:text-light-2">
-              out of 10
+              out of {quiz.questions.length}
             </span>
           </div>
         </article>

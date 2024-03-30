@@ -1,5 +1,5 @@
 import { Header } from "@/components";
-import { QuizGateway } from "@/data/quiz.gateway";
+import { QuizGateway } from "@/data";
 import { redirect } from "next/navigation";
 
 export default async function HomeLayout({
@@ -7,9 +7,9 @@ export default async function HomeLayout({
   params,
 }: Readonly<{
   children: React.ReactNode;
-  params: { quizId: string };
+  params: { quizTitle: string };
 }>) {
-  const quiz = await QuizGateway.findByTitle(params.quizId);
+  const quiz = await QuizGateway.findByTitle(params.quizTitle);
 
   if (!quiz) {
     redirect("/");

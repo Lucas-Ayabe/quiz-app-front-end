@@ -1,4 +1,6 @@
-export const QuizGateway = {
+import type { Quiz } from "@/domain";
+
+const InMemoryQuizGateway = {
   async list() {
     return [
       {
@@ -368,9 +370,28 @@ export const QuizGateway = {
           },
         ],
       },
-    ].map((quiz) => ({ ...quiz, icon: `/assets/${quiz.icon}` }));
+    ].map((quiz, id) => ({
+      ...quiz,
+      id: id + 1,
+      icon: `/assets/${quiz.icon}`,
+      questions: quiz.questions.map((question, id) => ({
+        ...question,
+        id: id + 1,
+      })),
+    }));
   },
   async findByTitle(title: string) {
     return (await this.list()).find((quiz) => quiz.title === title);
+  },
+};
+
+export const QuizGateway = {
+  async list(): Promise<Quiz[]> {
+    return (await fetch("http://localhost:3001/quizzes")).json();
+  },
+  async findByTitle(title: string) {
+    const list = await this.list();
+
+    return list.find((quiz) => quiz.title === title);
   },
 };
